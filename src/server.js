@@ -27,6 +27,6 @@ app.post('/prueba',formData,(req,res)=>{
 })
 
 
-app.listen(port, () => {
-  console.log('Server Running Ok');
-});
+app.listen(port, () =>
+  console.log(`Server running at http://localhost:${port}!`)
+);
