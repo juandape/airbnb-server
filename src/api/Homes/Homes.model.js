@@ -1,13 +1,13 @@
-const { Schema, model, models } = require("mongoose");
+const { Schema, model } = require('mongoose');
 const priceRegex = new RegExp(
-  "^(0*[1-9][0-9]*([,.][0-9]+)?|0+.[0-9]*[1-9][0-9]*)$"
+  '^(0*[1-9][0-9]*([,.][0-9]+)?|0+.[0-9]*[1-9][0-9]*)$'
 );
 
 const homeSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      ref: "Users",
+      ref: 'Users',
       required: true,
     },
     location: {
@@ -22,24 +22,24 @@ const homeSchema = new Schema(
     },
     price: {
       type: Number,
-      required: [true, "Debe ingresar un precio."],
-      match: [priceRegex, "Ingrese un precio valido superior a 0.00"],
+      required: [true, 'Debe ingresar un precio.'],
+      match: [priceRegex, 'Ingrese un precio valido superior a 0.00'],
     },
     comments: {
-      type: [{ type: Schema.Types.ObjectId, ref: "Comments" }],
+      type: [{ type: Schema.Types.ObjectId, ref: 'Comments' }],
       required: false,
     },
     images: {
       type: Array,
-      required: [true, "Debe ingresar las imagenes del inmueble."],
+      required: [true, 'Debe ingresar las imagenes del inmueble.'],
     },
     amenities: {
       type: Array,
-      required: [true, "Debe ingresar las comodidades del inmueble."],
+      required: [true, 'Debe ingresar las comodidades del inmueble.'],
     },
     capacity: {
       type: Number,
-      required: [true, "Debe ingresar la capacidad total del inmueble."],
+      required: [true, 'Debe ingresar la capacidad total del inmueble.'],
     },
     totalreviews: {
       type: Number,
@@ -111,15 +111,15 @@ const homeSchema = new Schema(
       type: String,
       required: [
         false,
-        "Debe ingresar las fechas de disponibilidad del inmueble.",
+        'Debe ingresar las fechas de disponibilidad del inmueble.',
       ],
     },
     rooms: {
       type: Number,
-      required: [true, "Debe ingresar el numero de habitaciones del inmueble."],
+      required: [true, 'Debe ingresar el numero de habitaciones del inmueble.'],
     },
     reservations: {
-      type: [{ type: Schema.Types.ObjectId, ref: "Reservations" }],
+      type: [{ type: Schema.Types.ObjectId, ref: 'Reservations' }],
       required: false,
     },
   },
@@ -128,6 +128,6 @@ const homeSchema = new Schema(
   }
 );
 
-const Homes = model("Homes", homeSchema);
+const Homes = model('Homes', homeSchema);
 
 module.exports = Homes;

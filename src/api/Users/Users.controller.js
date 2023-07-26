@@ -8,7 +8,7 @@ const Reservations = require('../Reservations/reservation.model');
 module.exports = {
   //get all
 
-  async singup(req, res, next) {
+  async signup(req, res, next) {
     try {
       const data = req.body;
 
@@ -38,7 +38,7 @@ module.exports = {
     }
   },
 
-  async singin(req, res) {
+  async signin(req, res) {
     try {
       const { email, password } = req.body;
       const user = await User.findOne({ email });
@@ -126,7 +126,8 @@ module.exports = {
       res.status(400).json({ message: 'User could not be created', data: err });
     }
   },
-    */
+  */
+
   async update(req, res) {
     try {
       const data = req.body;
