@@ -2,7 +2,7 @@ const { create } = require('./Users.model');
 const User = require('./Users.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { transporter, welcome } = require('../Utils/mailer');
+const { transporter, welcome, sendMail } = require('../Utils/mailer');
 const Reservations = require('../Reservations/reservation.model');
 
 module.exports = {
@@ -28,7 +28,7 @@ module.exports = {
       console.log(
         ` user: ${process.env.MAIL_USER}, pass: ${process.env.MAIL_PASSWORD}`,
       );
-      await transporter.sendMail(welcome(newUser));
+      await sendMail(newUser);
 
       res
         .status(200)
