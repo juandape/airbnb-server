@@ -1,19 +1,18 @@
 const fs = require('fs');
+const { uploadImg } = require('./upload.service');
 
-const { uploadImage } = require('./upload.service');
+async function uploadSingleImg(req, res) {
+  const { path, size } = req.file;
 
-async function uploadSingleHandler(req, res) {
-  const { path, size } = req.file; // as Express.Multer.File;
-
-  const maxSize = 1024 * 1024 * 2; // 2mb
+  const maxSize = 1024 * 1024 * 2;
 
   if (size > maxSize) {
     fs.unlinkSync(path);
-    return res.status(400).json({ message: 'File is too large' });
+    return res.status(400).json({ message: 'Use only files up to 2mb' });
   }
 
   try {
-    const result = await uploadImage(path);
+    const result = await uploadImg(path);
 
     return res.status(201).json(result);
   } catch (error) {
@@ -23,15 +22,15 @@ async function uploadSingleHandler(req, res) {
   }
 }
 
-async function uploadMultipleHandler(req, res) {
-  const files = req.files; // as Express.Multer.File[];
+async function uploadMultipleImg(req, res) {
+  const files = req.files;
 
   if (!files.length) {
     return res.status(400).json({ message: 'No files provided' });
   }
 
   try {
-    const promises = files.map((file) => uploadImage(file.path));
+    const promises = files.map((file) => uploadImg(file.path));
 
     const results = await Promise.all(promises);
 
@@ -44,6 +43,6 @@ async function uploadMultipleHandler(req, res) {
 }
 
 module.exports = {
-  uploadSingleHandler,
-  uploadMultipleHandler,
+  uploadSingleImg,
+  uploadMultipleImg,
 };
