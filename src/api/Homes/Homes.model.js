@@ -8,21 +8,21 @@ const homeSchema = new Schema(
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'Users',
-      required: true,
+      required: false,
     },
     location: {
       coordinates: {
         type: Object,
-        required: true,
+        required: false,
       },
       city: {
         type: String,
-        required: true,
+        required: false,
       },
     },
     price: {
       type: Number,
-      required: [true, 'Debe ingresar un precio.'],
+      required: [false, 'Debe ingresar un precio.'],
       match: [priceRegex, 'Ingrese un precio valido superior a 0.00'],
     },
     comments: {
@@ -31,15 +31,15 @@ const homeSchema = new Schema(
     },
     images: {
       type: Array,
-      required: [true, 'Debe ingresar las imagenes del inmueble.'],
+      required: [false, 'Debe ingresar las imagenes del inmueble.'],
     },
     amenities: {
       type: Array,
-      required: [true, 'Debe ingresar las comodidades del inmueble.'],
+      required: [false, 'Debe ingresar las comodidades del inmueble.'],
     },
     capacity: {
       type: Number,
-      required: [true, 'Debe ingresar la capacidad total del inmueble.'],
+      required: [false, 'Debe ingresar la capacidad total del inmueble.'],
     },
     totalreviews: {
       type: Number,
@@ -105,7 +105,7 @@ const homeSchema = new Schema(
     scorevalue: {
       type: Number,
       default: 0,
-      required: true,
+      required: false,
     },
     dates: {
       type: String,
@@ -116,7 +116,7 @@ const homeSchema = new Schema(
     },
     rooms: {
       type: Number,
-      required: [true, 'Debe ingresar el numero de habitaciones del inmueble.'],
+      required: [false, 'Debe ingresar el numero de habitaciones del inmueble.'],
     },
     reservations: {
       type: [{ type: Schema.Types.ObjectId, ref: 'Reservations' }],
@@ -124,7 +124,7 @@ const homeSchema = new Schema(
     },
   },
   {
-    timestamps: true,
+    timestamps: false,
   }
 );
 
