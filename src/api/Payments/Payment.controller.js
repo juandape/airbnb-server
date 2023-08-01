@@ -34,4 +34,15 @@ module.exports = {
       return next(error);
     }
   },
+
+  //GET
+  list: async (req, res, next) => {
+    try {
+      const payments = await Payments.find();
+
+      res.status(200).json({ message: 'Payments found', data: payments });
+    } catch (error) {
+      return next(error);
+    }
+  }
 };
