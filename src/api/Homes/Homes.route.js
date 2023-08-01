@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const homesController = require("./Homes.controller");
 const { auth } = require('../Utils/auth');
-// const { uploadImgFiles } = require('../Upload/upload.controller');
 const formData = require("../Utils/formData");
 
 router.route("/").get(homesController.list)

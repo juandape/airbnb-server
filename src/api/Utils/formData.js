@@ -1,16 +1,7 @@
 const busboy = require('busboy');
-// const cloudinary = require('cloudinary').v2;
-// const multer = require("multer");
-// const { Router } = require('express');
+const { uploadImgFiles } = require('../Upload/upload.controller');
 
-// cloudinary.config({
-//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//   api_key: process.env.CLOUDINARY_API_KEY,
-//   api_secret: process.env.CLOUDINARY_API_SECRET,
-// });
-
-const formData = (req,res,next) => {
-
+const formData = (req, res, next) => {
   let img = [];
   let location = {
     coordinates: {
@@ -59,39 +50,49 @@ const formData = (req,res,next) => {
 
   req.body.location = location;
 
-  // bb.on('file', (key, stream) => {
-  //   uploadingFile = true;
-  //   uploadingCount++;
-  //   const cloud = cloudinary.uploader.upload_stream(
-  //     { upload_preset: 'top24' },
-  //     (err, res) => {
-  //       if (err) {
-  //         next(err);
-  //       }
-
-  //       // req.body[key] = res.secure_url
-  //       delete req.body[key]
-  //       // img.push(res.secure_url);
-  //       req.body.images = img;
-  //       uploadingFile = false;
-  //       uploadingCount--;
-  //       done();
-  //     }
-  //   );
-
-    // stream.on('data', (data) => {
-    //   cloud.write(data);
-    // });
-
-    // stream.on('end', () => {
-    //   cloud.end();
-    // });
-
-  bb.on('finish', () => {
+  uploadImgFiles(req, res, (err) => {
+    uploadingFile = true;
+    uploadingCount++;
+    if (err) {
+      next(err);
+    }
     done();
   });
 
-  req.pipe(bb);
+
+  // bb.on('finish', () => {
+  //   done();
+  // });
+
+  // req.pipe(bb);
 };
 
 module.exports = formData;
+
+// bb.on('file', (key, stream) => {
+//   uploadingFile = true;
+//   uploadingCount++;
+//   const cloud = cloudinary.uploader.upload_stream(
+//     { upload_preset: 'top24' },
+//     (err, res) => {
+//       if (err) {
+//         next(err);
+//       }
+
+//       // req.body[key] = res.secure_url
+//       delete req.body[key]
+//       // img.push(res.secure_url);
+//       req.body.images = img;
+//       uploadingFile = false;
+//       uploadingCount--;
+//       done();
+//     }
+//   );
+
+// stream.on('data', (data) => {
+//   cloud.write(data);
+// });
+
+// stream.on('end', () => {
+//   cloud.end();
+// });

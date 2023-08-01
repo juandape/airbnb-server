@@ -4,6 +4,7 @@ const reservationRoute = require('./src/api/Reservations/reservation.route');
 const commentsRoute = require('./src/api/Comments/Comments.route');
 const uploadRouter = require('./src/api/Utils/formData');
 const formData = require('./src/api/Utils/formData');
+const paymentsRoute = require('./src/api/Payments/Payment.route');
 
 function router(app) {
   app.use('/homes', homesRoute);
@@ -11,7 +12,8 @@ function router(app) {
   app.use('/reservations', reservationRoute);
   app.use('/comments', commentsRoute);
   app.use('/api/upload', uploadRouter);
-  
+  app.use('/payments', paymentsRoute);
+
   app.post('/prueba', formData, (req, res) => {
     res.status(200).json({ ...req.body });
   });
