@@ -11,8 +11,7 @@ async function uploadImgFiles(req, res) {
 
     return res.status(201).json(results);
   } catch (error) {
-    res.status(500).json(error);
-    console.log(error);
+    return res.status(500).json(error);
   }
   finally {
     files.forEach((file) => fs.unlinkSync(file.path));

@@ -2,6 +2,7 @@ const router = require("express").Router();
 const homesController = require("./Homes.controller");
 const { auth } = require('../Utils/auth');
 const formData = require("../Utils/formData");
+const uploadImgFiles = require("../Upload/upload.controller");
 
 router.route("/").get(homesController.list)
 router.route('/listings').get(auth, homesController.showUser)

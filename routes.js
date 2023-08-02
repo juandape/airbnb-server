@@ -2,7 +2,7 @@ const homesRoute = require('./src/api/Homes/Homes.route');
 const userRoute = require('./src/api/Users/Users.route');
 const reservationRoute = require('./src/api/Reservations/reservation.route');
 const commentsRoute = require('./src/api/Comments/Comments.route');
-const uploadRouter = require('./src/api/Utils/formData');
+const uploadRouter = require('./src/api/Upload/index');
 const formData = require('./src/api/Utils/formData');
 const paymentsRoute = require('./src/api/Payments/Payment.route');
 

@@ -1,5 +1,4 @@
 const busboy = require('busboy');
-const { uploadImgFiles } = require('../Upload/upload.controller');
 
 const formData = (req, res, next) => {
   let img = [];
@@ -43,6 +42,10 @@ const formData = (req, res, next) => {
       req.body.price = price;
     } else if (key === 'capacity' || key === 'rooms') {
       req.body[key] = parseFloat(val);
+    } else if (key === 'images') {
+      const valSplit = val.split(',');
+      valSplit.forEach((item) => img.push(item));
+      req.body.images = img;
     } else {
       req.body[key] = val;
     }
@@ -50,21 +53,12 @@ const formData = (req, res, next) => {
 
   req.body.location = location;
 
-  uploadImgFiles(req, res, (err) => {
-    uploadingFile = true;
-    uploadingCount++;
-    if (err) {
-      next(err);
-    }
+
+  bb.on('finish', () => {
     done();
   });
 
-
-  // bb.on('finish', () => {
-  //   done();
-  // });
-
-  // req.pipe(bb);
+  req.pipe(bb);
 };
 
 module.exports = formData;
