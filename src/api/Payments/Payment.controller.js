@@ -1,4 +1,4 @@
-const Payments = require('./payment.model');
+const Payments = require('./Payment.model');
 const Users = require('../Users/Users.model');
 const Stripe = require('stripe');
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
