@@ -1,5 +1,6 @@
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const url = 'https://airbnbcloneserver.onrender.com/';
 
 //Metadata info about the API
 const options = {
@@ -23,7 +24,8 @@ const swaggerDocs = (app, port) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(swaggerSpec);
   });
-  console.log(`V1 Docs are available at port: http://localhost:${port}/api/v1/docs`);
+  console.log(`V1 Docs are available at localport: http://localhost:${port}/api/v1/docs`);
+  console.log(`V1 Docs are available at render: ${url}/api/v1/docs`);
 };
 
 module.exports = { swaggerDocs };
