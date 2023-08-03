@@ -1,9 +1,9 @@
 const mongoose = require("mongoose")
+const mongoUri = process.env.MONGO_URI
 
 function connect() {
-    const mongoUri = process.env.MONGO_URI
-    
-    mongoose.connect(process.env.MONGO_URI)
+
+    mongoose.connect(mongoUri)
     mongoose.connection.once("open",()=>{
         console.log("connection with mongo OK")
     })

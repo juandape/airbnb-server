@@ -1,20 +1,23 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
-exports.auth = (req,res,next) =>{
-    try{
-        const {authorization}  = req.headers
+const secret = process.env.SECRET_KEY;
 
-        const [_,token] = authorization.split(' ')
+exports.auth = (req, res, next) => {
+  try {
+    const { authorization } = req.headers;
 
-        if (!token) return res.status(400).send('No token provided')
+    const [_, token] = authorization.split(' ');
 
-        const {id} = jwt.verify(token,process.env.SECRET_KEY)
+    if (!token) return res.status(400).send('No token provided');
 
-        req.userId = id
+    const { id } = jwt.verify(token, secret);
 
-        next()
+    req.userId = id;
 
-    } catch(err){
-        res.status(400).json({message:'something went wrong with token',data:err})
-    }
-}
+    next();
+  } catch (err) {
+    res
+      .status(400)
+      .json({ message: 'something went wrong with token', data: err });
+  }
+};

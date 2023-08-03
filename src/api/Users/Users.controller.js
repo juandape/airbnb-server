@@ -2,13 +2,13 @@ const { create } = require('./Users.model');
 const User = require('./Users.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { transporter, welcome } = require('../Utils/mailer');
+const { transporter, welcome, sendMail } = require('../Utils/mailer');
 const Reservations = require('../Reservations/reservation.model');
 
 module.exports = {
   //get all
 
-  async singup(req, res, next) {
+  async signup(req, res, next) {
     try {
       const data = req.body;
 
@@ -25,10 +25,7 @@ module.exports = {
       const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
         expiresIn: 60 * 60 * 24,
       });
-      console.log(
-        ` user: ${process.env.MAIL_USER}, pass: ${process.env.MAIL_PASSWORD}`,
-      );
-      await transporter.sendMail(welcome(newUser));
+      await sendMail(newUser);
 
       res
         .status(200)
@@ -38,7 +35,7 @@ module.exports = {
     }
   },
 
-  async singin(req, res) {
+  async signin(req, res) {
     try {
       const { email, password } = req.body;
       const user = await User.findOne({ email });
@@ -126,7 +123,8 @@ module.exports = {
       res.status(400).json({ message: 'User could not be created', data: err });
     }
   },
-    */
+  */
+
   async update(req, res) {
     try {
       const data = req.body;

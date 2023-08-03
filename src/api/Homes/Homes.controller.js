@@ -12,7 +12,7 @@ module.exports = {
           path: "userId",
           select: "-_id name email rol",
         })
-        
+
       res.status(201).json({ message: "Homes found", data: homes });
     } catch (err) {
       res.status(400).json(err);
@@ -33,13 +33,13 @@ module.exports = {
             select: "-_id name profileimg",
           },
         });
-      
+
       if(!home){
         throw new Error('Home not found');
       }
       res.status(201).json({ message: "Home found", data: home });
     } catch (error) {
-      
+
       res.status(400).json({message: "error", data: error.message});
     }
   },
@@ -58,6 +58,7 @@ module.exports = {
         ...data,
         userId: userId,
       };
+      console.log(newHome);
       const home = await Homes.create(newHome);
       user.rol = "host";
       user.homes.push(home._id);
@@ -137,7 +138,7 @@ module.exports = {
     try {
       const { coordinates, dates, people, flexRange } = req.body;
       let reserve2 = []
-      
+
       switch(flexRange){
         case 'one':
           reserve2 = [Date.parse(dates[0])+(1*24*60*60*1000),Date.parse(dates[1])-(1*24*60*60*1000)]
@@ -146,11 +147,11 @@ module.exports = {
         case 'seven':
           reserve2 = [Date.parse(dates[0])+(3*24*60*60*1000),Date.parse(dates[1])-(3*24*60*60*1000)]
         case 'normal':
-          reserve2 = [Date.parse(dates[0]),Date.parse(dates[1])]   
+          reserve2 = [Date.parse(dates[0]),Date.parse(dates[1])]
         default:
-          reserve2 = [Date.parse(dates[0]),Date.parse(dates[1])]  
+          reserve2 = [Date.parse(dates[0]),Date.parse(dates[1])]
       }
-      
+
       const respf =[];
       const capacity = Object.values(people).reduce((a, b) => a + b, 0);
       const bounds = {
@@ -163,7 +164,7 @@ module.exports = {
       const homes = await Homes.find()
 
       async function searchReservation (resId,home){
-        try{ 
+        try{
           const reservation = await Reservations.findById(resId)
           if (
             !(reserve2[0] >= reservation.initialDdate && reserve2[0] <= reservation.finalDate) ||
@@ -199,7 +200,7 @@ module.exports = {
 
 
       homes.forEach((item) => {
-        if (!(item.filter)) return 
+        if (!(item.filter)) return
         if (
           item.location.coordinates.lat < bounds.north &&
           item.location.coordinates.lat > bounds.south &&
@@ -210,7 +211,7 @@ module.exports = {
           respf.push(item);
         }
       });
-      
+
       res.status(200).json({ message: "filter found", data: respf });
     } catch (err) {
       res.status(400).json({ message: "no filter applied", data: err });
